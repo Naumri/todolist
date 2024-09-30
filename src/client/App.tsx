@@ -1,7 +1,13 @@
+import Header from "./components/Header";
+import Todolist from "./components/Todolist";
+import Footer from "./components/Footer";
+
 function App() {
   return (
     <div className="App">
-      <h1>Olá Mundo!</h1>
+      <Header />
+      <Todolist />
+      <Footer />
     </div>
   );
 }
