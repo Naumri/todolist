@@ -5,13 +5,13 @@ function Form() {
 
   const addTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("http://localhost:3001/tasks", {
+    fetch("http://localhost:3000/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ text: textTask }),
-    }).then((response) => response.json());
+    });
 
     setTextTask("");
   };
