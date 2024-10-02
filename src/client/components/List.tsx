@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import Task from "./Task";
 
 interface ITask {
   id: number;
   text: string;
+  isEdit: boolean;
 }
 
 function List() {
@@ -14,30 +16,11 @@ function List() {
       .then((tasks) => setTasks(tasks));
   });
 
-  const deleteTask = (id: number) => {
-    console.log(id);
-    fetch(`http://localhost:3000/tasks/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  };
-
   return (
     <div>
       <h2>TAREFAS</h2>
       {tasks.map((task) => (
-        <div key={task.id}>
-          <span>{task.text}</span>
-          <button
-            onClick={() => {
-              deleteTask(task.id);
-            }}
-          >
-            Deletar
-          </button>
-        </div>
+        <Task task={task} key={task.id} />
       ))}
     </div>
   );
