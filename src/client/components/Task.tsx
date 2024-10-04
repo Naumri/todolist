@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { MdModeEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 interface ITask {
   id: number;
@@ -42,17 +44,26 @@ function Task({ task }: listProps) {
   };
 
   return (
-    <div>
+    <div className="my-4">
       {task.isEdit ? (
-        <form onSubmit={(e) => e.preventDefault()}>
-          <input
-            type="text"
-            defaultValue={task.text}
-            onChange={(e) => {
-              setEditText(e.target.value);
-            }}
-          />
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="bg-cblue-100 w-full h-full py-2 flex justify-between rounded-md"
+        >
+          <div className="flex ml-4 items-center">
+            <MdModeEdit className="w-8 h-8" />
+            <input
+              autoFocus
+              className="bg-cblue-100 outline-0 ml-4"
+              type="text"
+              defaultValue={task.text}
+              onChange={(e) => {
+                setEditText(e.target.value);
+              }}
+            />
+          </div>
           <button
+            className="bg-white text-[#3BADCC] font-poppins-semibold px-4 py-2 rounded-md mr-2 hover:bg-[#eee]"
             onClick={() => {
               editTask(task.id);
             }}
@@ -61,22 +72,26 @@ function Task({ task }: listProps) {
           </button>
         </form>
       ) : (
-        <div>
+        <div className="flex justify-between items-center px-4 py-[11px] border border-cblue-200 rounded-md">
           <span>{task.text}</span>
-          <button
-            onClick={() => {
-              isEditing(task.id);
-            }}
-          >
-            Editar
-          </button>
-          <button
-            onClick={() => {
-              deleteTask(task.id);
-            }}
-          >
-            Deletar
-          </button>
+          <div className="flex items-center">
+            <button
+              className="hover:text-cblue-100"
+              onClick={() => {
+                isEditing(task.id);
+              }}
+            >
+              <MdModeEdit className="w-8 h-8" />
+            </button>
+            <button
+              className="hover:text-[#fc2121]"
+              onClick={() => {
+                deleteTask(task.id);
+              }}
+            >
+              <MdDelete className="w-8 h-8 ml-6" />
+            </button>
+          </div>
         </div>
       )}
     </div>

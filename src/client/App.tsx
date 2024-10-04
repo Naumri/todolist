@@ -4,9 +4,11 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App font-poppins text-white">
       <Header />
-      <Todolist />
+      <div className="flex justify-center">
+        <Todolist />
+      </div>
       <Footer />
     </div>
   );
