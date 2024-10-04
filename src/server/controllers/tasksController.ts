@@ -19,6 +19,11 @@ const addTask = (req: Request, res: Response) => {
   res.status(201).json(task);
 };
 
+const reorder = (req: Request, res: Response) => {
+  tasks = req.body.items;
+  res.status(200).send();
+};
+
 const editTask = (req: Request, res: Response) => {
   const id = Number(req.params.id);
   tasks = tasks.map((t) =>
@@ -42,4 +47,4 @@ const deleteTask = (req: Request, res: Response) => {
   res.status(200).send();
 };
 
-export { getTasks, addTask, deleteTask, isEditing, editTask };
+export { getTasks, addTask, deleteTask, isEditing, editTask, reorder };

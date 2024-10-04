@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { MdModeEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
+import { MdModeEdit, MdDelete, MdDragIndicator } from "react-icons/md";
+import { Draggable } from "@hello-pangea/dnd";
 
 interface ITask {
   id: number;
@@ -10,9 +10,11 @@ interface ITask {
 
 interface listProps {
   task: ITask;
+  index: number;
+  fetchTasks: () => Promise<void>;
 }
 
-function Task({ task }: listProps) {
+function Task({ task, index, fetchTasks }: listProps) {
   const [editText, setEditText] = useState<string>(task.text);
 
   const deleteTask = (id: number) => {
@@ -22,6 +24,8 @@ function Task({ task }: listProps) {
         "Content-Type": "application/json",
       },
     });
+
+    fetchTasks();
   };
 
   const editTask = (id: number) => {
@@ -32,6 +36,8 @@ function Task({ task }: listProps) {
       },
       body: JSON.stringify({ text: editText }),
     });
+
+    fetchTasks();
   };
 
   const isEditing = (id: number) => {
@@ -41,60 +47,74 @@ function Task({ task }: listProps) {
         "Content-Type": "application/json",
       },
     });
+
+    fetchTasks();
   };
 
   return (
-    <div className="my-4">
-      {task.isEdit ? (
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="bg-cblue-100 w-full h-full py-2 flex justify-between rounded-md"
+    <Draggable draggableId={task.id.toString()} index={index}>
+      {(provided) => (
+        <div
+          className="mb-4"
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+          ref={provided.innerRef}
         >
-          <div className="flex ml-4 items-center">
-            <MdModeEdit className="w-8 h-8" />
-            <input
-              autoFocus
-              className="bg-cblue-100 outline-0 ml-4"
-              type="text"
-              defaultValue={task.text}
-              onChange={(e) => {
-                setEditText(e.target.value);
-              }}
-            />
-          </div>
-          <button
-            className="bg-white text-[#3BADCC] font-poppins-semibold px-4 py-2 rounded-md mr-2 hover:bg-[#eee]"
-            onClick={() => {
-              editTask(task.id);
-            }}
-          >
-            EDITAR TAREFA
-          </button>
-        </form>
-      ) : (
-        <div className="flex justify-between items-center px-4 py-[11px] border border-cblue-200 rounded-md">
-          <span>{task.text}</span>
-          <div className="flex items-center">
-            <button
-              className="hover:text-cblue-100"
-              onClick={() => {
-                isEditing(task.id);
-              }}
+          {task.isEdit ? (
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="bg-cblue-100 w-full h-full py-2 flex justify-between rounded-md"
             >
-              <MdModeEdit className="w-8 h-8" />
-            </button>
-            <button
-              className="hover:text-[#fc2121]"
-              onClick={() => {
-                deleteTask(task.id);
-              }}
-            >
-              <MdDelete className="w-8 h-8 ml-6" />
-            </button>
-          </div>
+              <div className="flex ml-4 items-center">
+                <MdModeEdit className="w-8 h-8" />
+                <input
+                  autoFocus
+                  className="bg-cblue-100 outline-0 ml-4"
+                  type="text"
+                  defaultValue={task.text}
+                  onChange={(e) => {
+                    setEditText(e.target.value);
+                  }}
+                />
+              </div>
+              <button
+                className="bg-white text-[#3BADCC] font-poppins-semibold px-4 py-2 rounded-md mr-2 hover:bg-[#eee]"
+                onClick={() => {
+                  editTask(task.id);
+                }}
+              >
+                EDITAR TAREFA
+              </button>
+            </form>
+          ) : (
+            <div className="flex justify-between items-center px-4 py-[11px] border border-cblue-200 rounded-md">
+              <div className="flex items-center">
+                <MdDragIndicator className="w-8 h-8 text-[#16414D]" />
+                <span className="ml-4">{task.text}</span>
+              </div>
+              <div className="flex items-center">
+                <button
+                  className="hover:text-cblue-100"
+                  onClick={() => {
+                    isEditing(task.id);
+                  }}
+                >
+                  <MdModeEdit className="w-8 h-8" />
+                </button>
+                <button
+                  className="hover:text-[#fc2121]"
+                  onClick={() => {
+                    deleteTask(task.id);
+                  }}
+                >
+                  <MdDelete className="w-8 h-8 ml-6" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </Draggable>
   );
 }
 

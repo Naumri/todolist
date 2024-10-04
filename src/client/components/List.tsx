@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Task from "./Task";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 
 interface ITask {
   id: number;
@@ -7,14 +8,39 @@ interface ITask {
   isEdit: boolean;
 }
 
-function List() {
-  const [tasks, setTasks] = useState<ITask[]>([]);
+interface listProps {
+  tasks: ITask[];
+  setTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
+  fetchTasks: () => Promise<void>;
+}
 
+function List({ tasks, setTasks, fetchTasks }: listProps) {
   useEffect(() => {
-    fetch("http://localhost:3000/tasks")
-      .then((response) => response.json())
-      .then((tasks) => setTasks(tasks));
-  });
+    fetchTasks();
+  }, []);
+
+  function reorder<T>(list: T[], start: number, end: number) {
+    const result = Array.from(list);
+    const [removed] = result.splice(start, 1);
+    result.splice(end, 0, removed);
+
+    return result;
+  }
+
+  const dragEnd = async (result: any) => {
+    if (!result.destination) return;
+    const items = reorder(tasks, result.source.index, result.destination.index);
+    console.log(items);
+    setTasks(items);
+
+    await fetch("http://localhost:3000/tasks/reorder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ items }),
+    });
+  };
 
   return (
     <div className="mt-24">
@@ -25,11 +51,31 @@ function List() {
           {tasks.length}
         </span>
       </div>
-      {tasks.length > 0 ? (
-        tasks.map((task) => <Task task={task} key={task.id} />)
-      ) : (
-        <p className="mt-4 text-[#CCC]">Nenhuma tarefa foi criada ainda.</p>
-      )}
+      <div className="list mt-4">
+        <DragDropContext onDragEnd={dragEnd}>
+          <Droppable droppableId="tasks" type="list" direction="vertical">
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                {tasks.length > 0 ? (
+                  tasks.map((task, index) => (
+                    <Task
+                      task={task}
+                      key={task.id}
+                      index={index}
+                      fetchTasks={fetchTasks}
+                    />
+                  ))
+                ) : (
+                  <p className="mt-4 text-[#CCC]">
+                    Nenhuma tarefa foi criada ainda.
+                  </p>
+                )}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
     </div>
   );
 }

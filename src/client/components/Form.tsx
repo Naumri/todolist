@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-function Form() {
+interface listProps {
+  fetchTasks: () => Promise<void>;
+}
+
+function Form({ fetchTasks }: listProps) {
   const [textTask, setTextTask] = useState<string>("");
 
   const addTask = (e: React.FormEvent<HTMLFormElement>) => {
@@ -14,6 +18,7 @@ function Form() {
     });
 
     setTextTask("");
+    fetchTasks();
   };
 
   return (
