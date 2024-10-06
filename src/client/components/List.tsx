@@ -6,6 +6,7 @@ interface ITask {
   id: number;
   text: string;
   isEdit: boolean;
+  checked: boolean;
 }
 
 interface listProps {

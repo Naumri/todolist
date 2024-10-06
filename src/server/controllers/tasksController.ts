@@ -4,6 +4,7 @@ interface ITask {
   id: number;
   text: string;
   isEdit: boolean;
+  checked: boolean;
 }
 
 let tasks: ITask[] = [];
@@ -13,7 +14,12 @@ const getTasks = (req: Request, res: Response) => {
 };
 
 const addTask = (req: Request, res: Response) => {
-  const task: ITask = { id: Date.now(), text: req.body.text, isEdit: false };
+  const task: ITask = {
+    id: Date.now(),
+    text: req.body.text,
+    isEdit: false,
+    checked: false,
+  };
   tasks.push(task);
 
   res.status(201).json(task);
@@ -40,6 +46,13 @@ const isEditing = (req: Request, res: Response) => {
   res.status(200).send();
 };
 
+const isChecked = (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  tasks = tasks.map((t) => (t.id === id ? { ...t, checked: !t.checked } : t));
+
+  res.status(200).send();
+};
+
 const deleteTask = (req: Request, res: Response) => {
   const id = Number(req.params.id);
   tasks = tasks.filter((task) => task.id !== id);
@@ -47,4 +60,12 @@ const deleteTask = (req: Request, res: Response) => {
   res.status(200).send();
 };
 
-export { getTasks, addTask, deleteTask, isEditing, editTask, reorder };
+export {
+  getTasks,
+  addTask,
+  deleteTask,
+  isEditing,
+  editTask,
+  reorder,
+  isChecked,
+};

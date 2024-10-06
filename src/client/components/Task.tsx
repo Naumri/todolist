@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { MdModeEdit, MdDelete, MdDragIndicator } from "react-icons/md";
 import { Draggable } from "@hello-pangea/dnd";
+import { FaCheck } from "react-icons/fa";
 
 interface ITask {
   id: number;
   text: string;
   isEdit: boolean;
+  checked: boolean;
 }
 
 interface listProps {
@@ -51,6 +53,17 @@ function Task({ task, index, fetchTasks }: listProps) {
     fetchTasks();
   };
 
+  const isChecked = (id: number) => {
+    fetch(`http://localhost:3000/tasks/${id}/checked`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    fetchTasks();
+  };
+
   return (
     <Draggable draggableId={task.id.toString()} index={index}>
       {(provided) => (
@@ -66,10 +79,10 @@ function Task({ task, index, fetchTasks }: listProps) {
               className="bg-cblue-100 w-full h-full py-2 flex justify-between rounded-md"
             >
               <div className="flex ml-4 items-center">
-                <MdModeEdit className="w-8 h-8" />
+                <MdModeEdit className="w-8 h-8 text-white dark:text-black" />
                 <input
                   autoFocus
-                  className="bg-cblue-100 outline-0 ml-4"
+                  className="bg-cblue-100 outline-0 ml-4 text-white dark:text-black"
                   type="text"
                   defaultValue={task.text}
                   onChange={(e) => {
@@ -87,9 +100,23 @@ function Task({ task, index, fetchTasks }: listProps) {
               </button>
             </form>
           ) : (
-            <div className="flex justify-between items-center px-4 py-[11px] border border-cblue-200 rounded-md">
+            <div className="flex justify-between items-center px-4 py-[11px] border border-[#89ABB4] dark:border-cblue-200 rounded-md">
               <div className="flex items-center">
-                <MdDragIndicator className="w-8 h-8 text-[#16414D]" />
+                <MdDragIndicator className="w-8 h-8 text-[#89ABB4] dark:text-cblue-200" />
+                <label className="flex items-center cursor-pointer relative">
+                  <input
+                    checked={task.checked}
+                    onChange={() => isChecked(task.id)}
+                    type="checkbox"
+                    className="peer h-5 w-5 ml-2 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border-2 border-cblue-100 checked:bg-cblue-100"
+                    id="check1"
+                  />
+                  {task.checked && (
+                    <span className="absolute text-white dark:text-mblue-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <FaCheck />
+                    </span>
+                  )}
+                </label>
                 <span className="ml-4">{task.text}</span>
               </div>
               <div className="flex items-center">

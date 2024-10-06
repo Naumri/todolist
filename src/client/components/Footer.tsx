@@ -16,7 +16,7 @@ function Footer() {
           <span className="font-poppins-semibold">
             Quer ver mais projetos como esse?
           </span>{" "}
-          <a href="#" className="text-cblue-100 hover:text-[#3BADCC]">
+          <a href="#" className="text-cblue-100 hover:text-[#3BADCC] underline">
             Acesse meu portfólio
           </a>
         </p>
