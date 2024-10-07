@@ -9,7 +9,11 @@ interface ITask {
   checked: boolean;
 }
 
-function Todolist() {
+interface listProps {
+  t: (key: string) => string;
+}
+
+function Todolist({ t }: listProps) {
   const [tasks, setTasks] = useState<ITask[]>([]);
 
   const fetchTasks = async () => {
@@ -19,9 +23,9 @@ function Todolist() {
   };
 
   return (
-    <div className="bg-white dark:bg-mblue-200 w-[600px] py-16 px-8 rounded-xl max-h-[755px] z-10">
-      <Form fetchTasks={fetchTasks} />
-      <List tasks={tasks} setTasks={setTasks} fetchTasks={fetchTasks} />
+    <div className="bg-white dark:bg-mblue-200 w-[600px] py-16 px-8 rounded-xl max-h-[755px] z-10 relative">
+      <Form fetchTasks={fetchTasks} t={t} />
+      <List tasks={tasks} setTasks={setTasks} fetchTasks={fetchTasks} t={t} />
     </div>
   );
 }

@@ -1,23 +1,25 @@
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 
-function Footer() {
+interface listProps {
+  t: (key: string) => string;
+}
+
+function Footer({ t }: listProps) {
   return (
     <div className="px-8 py-8 absolute bottom-0 flex justify-between items-end w-full">
       <div className="text-sm">
         <p className="pt-2">
-          <span className="font-poppins-semibold">Design feito por</span> Arthur
+          <span className="font-poppins-semibold">{t("design")}</span> Arthur
           Justino
         </p>
         <p className="pt-2">
-          <span className="font-poppins-semibold">Desenvolvido por</span> Arthur
+          <span className="font-poppins-semibold">{t("developed")}</span> Arthur
           Justino
         </p>
         <p className="pt-2">
-          <span className="font-poppins-semibold">
-            Quer ver mais projetos como esse?
-          </span>{" "}
+          <span className="font-poppins-semibold">{t("question")}</span>{" "}
           <a href="#" className="text-cblue-100 hover:text-[#3BADCC] underline">
-            Acesse meu portfólio
+            {t("portfolio")}
           </a>
         </p>
       </div>

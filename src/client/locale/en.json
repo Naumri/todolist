@@ -1,0 +1,15 @@
+{
+  "translation": {
+    "header": "TO-DO LIST",
+    "title": "What are today's tasks?",
+    "placeholder": "write your task here...",
+    "btn-form": "CREATE TASK",
+    "tasks-title": "TASKS",
+    "no-tasks": "No tasks have been created yet.",
+    "edit-task": "EDIT TASK",
+    "design": "Design made by",
+    "developed": "Developed by",
+    "question": "Want to see more projects like this?",
+    "portfolio": "Access my portfolio"
+  }
+}

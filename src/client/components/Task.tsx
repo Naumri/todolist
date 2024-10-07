@@ -14,9 +14,10 @@ interface listProps {
   task: ITask;
   index: number;
   fetchTasks: () => Promise<void>;
+  t: (key: string) => string;
 }
 
-function Task({ task, index, fetchTasks }: listProps) {
+function Task({ task, index, fetchTasks, t }: listProps) {
   const [editText, setEditText] = useState<string>(task.text);
 
   const deleteTask = (id: number) => {
@@ -79,10 +80,10 @@ function Task({ task, index, fetchTasks }: listProps) {
               className="bg-cblue-100 w-full h-full py-2 flex justify-between rounded-md"
             >
               <div className="flex ml-4 items-center">
-                <MdModeEdit className="w-8 h-8 text-white dark:text-black" />
+                <MdModeEdit className="w-8 h-8 text-white" />
                 <input
                   autoFocus
-                  className="bg-cblue-100 outline-0 ml-4 text-white dark:text-black"
+                  className="bg-cblue-100 outline-0 ml-4 text-white"
                   type="text"
                   defaultValue={task.text}
                   onChange={(e) => {
@@ -96,19 +97,19 @@ function Task({ task, index, fetchTasks }: listProps) {
                   editTask(task.id);
                 }}
               >
-                EDITAR TAREFA
+                {t("edit-task")}
               </button>
             </form>
           ) : (
-            <div className="flex justify-between items-center px-4 py-[11px] border border-[#89ABB4] dark:border-cblue-200 rounded-md">
+            <div className="flex justify-between items-center px-4 py-[11px] border border-[#8DE6FF] dark:border-cblue-200 rounded-md">
               <div className="flex items-center">
                 <MdDragIndicator className="w-8 h-8 text-[#89ABB4] dark:text-cblue-200" />
-                <label className="flex items-center cursor-pointer relative">
+                <label className="flex items-center cursor-pointer relative ml-2">
                   <input
                     checked={task.checked}
                     onChange={() => isChecked(task.id)}
                     type="checkbox"
-                    className="peer h-5 w-5 ml-2 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border-2 border-cblue-100 checked:bg-cblue-100"
+                    className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border-2 border-cblue-100 checked:bg-cblue-100"
                     id="check1"
                   />
                   {task.checked && (

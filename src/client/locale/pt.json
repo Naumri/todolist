@@ -1,0 +1,15 @@
+{
+  "translation": {
+    "header": "LISTA DE TAREFAS",
+    "title": "Quais são as tarefas de hoje?",
+    "placeholder": "escreva sua tarefa aqui...",
+    "btn-form": "CRIAR TAREFA",
+    "tasks-title": "TAREFAS",
+    "no-tasks": "Nenhuma tarefa foi criada ainda.",
+    "edit-task": "EDITAR TAREFA",
+    "design": "Design feito por",
+    "developed": "Desenvolvido por",
+    "question": "Quer ver mais projetos como esse?",
+    "portfolio": "Acesse meu portfólio"
+  }
+}
