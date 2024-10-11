@@ -10,6 +10,10 @@
     "design": "Design feito por",
     "developed": "Desenvolvido por",
     "question": "Quer ver mais projetos como esse?",
-    "portfolio": "Acesse meu portfólio"
+    "portfolio": "Acesse meu portfólio",
+    "alltasks": "TODAS TAREFAS",
+    "done": "FEITAS",
+    "todo": "A FAZER",
+    "notordered": "NÃO ORDENADO"
   }
 }

@@ -10,13 +10,7 @@ Este é um site de lista de tarefas prático e minimalista, criado para facilita
 - Remover tarefas
 - Reordenar tarefas por meio de "drag and drop"
 - Alternar entre modo claro e escuro
-
-## Requisitos
-
-Antes de começar, certifique-se de que você tem o seguinte instalado em sua máquina:
-
-- [Node.js](https://nodejs.org/en/)
-- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+- Filtro e ordenação
 
 ## Instalação
 
@@ -25,14 +19,13 @@ Siga os passos abaixo para rodar o projeto localmente:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-
+   git clone git@github.com:Naumri/todolist.git
    ```
 
 2. Navegue até o diretório do projeto:
 
    ```bash
-   cd seu-repositorio
+   cd todolist
    ```
 
 3. Instale as dependências necessárias:

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Task from "./Task";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 
@@ -14,9 +14,18 @@ interface listProps {
   setTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
   fetchTasks: () => Promise<void>;
   t: (key: string) => string;
+  filter: string;
+  sortOrder: string;
 }
 
-function List({ tasks, setTasks, fetchTasks, t }: listProps) {
+function List({
+  tasks,
+  setTasks,
+  fetchTasks,
+  t,
+  filter,
+  sortOrder,
+}: listProps) {
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -44,7 +53,7 @@ function List({ tasks, setTasks, fetchTasks, t }: listProps) {
   };
 
   return (
-    <div className="mt-24">
+    <div>
       <div className="flex items-center">
         <div className="w-[15px] h-1 bg-cblue-100"></div>
         <h2 className="ml-2 font-poppins-semibold">{t("tasks-title")}</h2>
@@ -62,15 +71,31 @@ function List({ tasks, setTasks, fetchTasks, t }: listProps) {
                 className="pr-1"
               >
                 {tasks.length > 0 ? (
-                  tasks.map((task, index) => (
-                    <Task
-                      task={task}
-                      key={task.id}
-                      index={index}
-                      fetchTasks={fetchTasks}
-                      t={t}
-                    />
-                  ))
+                  tasks
+                    .filter((task) =>
+                      filter !== "todas"
+                        ? filter === "feitas"
+                          ? task.checked
+                          : !task.checked
+                        : true
+                    )
+                    .sort((a, b) =>
+                      sortOrder !== "noordered"
+                        ? sortOrder === "az"
+                          ? a.text.localeCompare(b.text)
+                          : b.text.localeCompare(a.text)
+                        : 0
+                    )
+                    .map((task, index) => (
+                      <Task
+                        task={task}
+                        key={task.id}
+                        index={index}
+                        fetchTasks={fetchTasks}
+                        t={t}
+                        sortOrder={sortOrder}
+                      />
+                    ))
                 ) : (
                   <p className="mt-4 dark:text-[#CCC] text-[#999]">
                     {t("no-tasks")}

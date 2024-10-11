@@ -10,6 +10,10 @@
     "design": "Design made by",
     "developed": "Developed by",
     "question": "Want to see more projects like this?",
-    "portfolio": "Access my portfolio"
+    "portfolio": "Access my portfolio",
+    "alltasks": "ALL TASKS",
+    "done": "DONE",
+    "todo": "TO DO",
+    "notordered": "NOT ORDERED"
   }
 }

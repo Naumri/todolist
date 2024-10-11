@@ -15,9 +15,10 @@ interface listProps {
   index: number;
   fetchTasks: () => Promise<void>;
   t: (key: string) => string;
+  sortOrder: string;
 }
 
-function Task({ task, index, fetchTasks, t }: listProps) {
+function Task({ task, index, fetchTasks, t, sortOrder }: listProps) {
   const [editText, setEditText] = useState<string>(task.text);
 
   const deleteTask = (id: number) => {
@@ -66,7 +67,11 @@ function Task({ task, index, fetchTasks, t }: listProps) {
   };
 
   return (
-    <Draggable draggableId={task.id.toString()} index={index}>
+    <Draggable
+      isDragDisabled={sortOrder !== "noordered"}
+      draggableId={task.id.toString()}
+      index={index}
+    >
       {(provided) => (
         <div
           className="mb-4"
