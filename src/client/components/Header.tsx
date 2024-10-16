@@ -20,7 +20,7 @@ function Header({
 }: listProps) {
   const [showConfig, setShowConfig] = useState<boolean>(false);
   return (
-    <header className="my-8 mx-8 flex justify-between items-center">
+    <header className="my-8 mx-8 flex justify-between items-center w-max-600:hidden">
       <h1 className="font-poppins-semibold">{t("header")}</h1>
       <div className="icons flex">
         {darkMode ? (
@@ -40,7 +40,7 @@ function Header({
             onClick={() => setShowConfig(!showConfig)}
           />
           {showConfig && (
-            <div className="configs-box absolute right-[-8px] m-2 dark:bg-mblue-200 bg-white rounded-lg">
+            <div className="configs-box absolute right-[-8px] z-50 m-2 dark:bg-mblue-200 bg-white rounded-lg">
               <div className="languages flex justify-between">
                 <div className="bg-cblue-100 p-4 rounded-l-lg">
                   <MdLanguage className="w-6 h-6 text-white" />

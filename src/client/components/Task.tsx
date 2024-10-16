@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { MdModeEdit, MdDelete, MdDragIndicator } from "react-icons/md";
 import { Draggable } from "@hello-pangea/dnd";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck as Checked } from "react-icons/fa";
+import { FaCheck as EditCheck } from "react-icons/fa6";
+import { IoMdClose } from "react-icons/io";
 
 interface ITask {
   id: number;
@@ -33,6 +35,8 @@ function Task({ task, index, fetchTasks, t, sortOrder }: listProps) {
   };
 
   const editTask = (id: number) => {
+    if (!editText) return;
+    if (editText.length >= 30) return;
     fetch(`http://localhost:3000/tasks/${id}/editext`, {
       method: "PATCH",
       headers: {
@@ -82,13 +86,18 @@ function Task({ task, index, fetchTasks, t, sortOrder }: listProps) {
           {task.isEdit ? (
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="bg-cblue-100 w-full h-full py-2 flex justify-between rounded-md"
+              className="bg-cblue-100 py-3 px-4 flex justify-between items-center rounded-md"
             >
-              <div className="flex ml-4 items-center">
-                <MdModeEdit className="w-8 h-8 text-white" />
+              <div className="flex items-center">
+                <div>
+                  <MdDragIndicator className="w-8 h-8 text-[#3497B2]" />
+                </div>
+                <div>
+                  <MdModeEdit className="w-8 h-8 ml-2 text-white" />
+                </div>
                 <input
                   autoFocus
-                  className="bg-cblue-100 outline-0 ml-4 text-white"
+                  className="bg-cblue-100 ml-[9px] outline-0 text-white w-full"
                   type="text"
                   defaultValue={task.text}
                   onChange={(e) => {
@@ -96,34 +105,46 @@ function Task({ task, index, fetchTasks, t, sortOrder }: listProps) {
                   }}
                 />
               </div>
-              <button
-                className="bg-white text-[#3BADCC] font-poppins-semibold px-4 py-2 rounded-md mr-2 hover:bg-[#eee]"
-                onClick={() => {
-                  editTask(task.id);
-                }}
-              >
-                {t("edit-task")}
-              </button>
+              <div className="flex items-center">
+                <button
+                  className="cursor-pointer"
+                  onClick={() => {
+                    editTask(task.id);
+                  }}
+                >
+                  <EditCheck className="w-8 h-8 text-white" />
+                </button>
+                <button
+                  onClick={() => isEditing(task.id)}
+                  className="ml-6 cursor-pointer"
+                >
+                  <IoMdClose className="w-8 h-8 text-white" />
+                </button>
+              </div>
             </form>
           ) : (
-            <div className="flex justify-between items-center px-4 py-[11px] border border-[#8DE6FF] dark:border-cblue-200 rounded-md">
+            <div className="flex justify-between items-center px-2 min-[400px]:px-4 py-[11px] border border-[#8DE6FF] dark:border-cblue-200 rounded-md">
               <div className="flex items-center">
-                <MdDragIndicator className="w-8 h-8 text-[#89ABB4] dark:text-cblue-200" />
+                <div>
+                  <MdDragIndicator className="w-8 h-8 w-max-350:w-6 w-max-350:h-6 text-[#89ABB4] dark:text-[#16414D]" />
+                </div>
                 <label className="flex items-center cursor-pointer relative ml-2">
                   <input
                     checked={task.checked}
                     onChange={() => isChecked(task.id)}
                     type="checkbox"
-                    className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border-2 border-cblue-100 checked:bg-cblue-100"
+                    className="peer h-6 w-6 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border-2 border-cblue-100 checked:bg-cblue-100"
                     id="check1"
                   />
                   {task.checked && (
                     <span className="absolute text-white dark:text-mblue-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <FaCheck />
+                      <Checked />
                     </span>
                   )}
                 </label>
-                <span className="ml-4">{task.text}</span>
+                <span className="ml-4 w-max-600:text-sm w-max-350:text-xs break-words">
+                  {task.text}
+                </span>
               </div>
               <div className="flex items-center">
                 <button
@@ -132,7 +153,7 @@ function Task({ task, index, fetchTasks, t, sortOrder }: listProps) {
                     isEditing(task.id);
                   }}
                 >
-                  <MdModeEdit className="w-8 h-8" />
+                  <MdModeEdit className="w-8 h-8 w-max-350:w-6 w-max-350:h-6" />
                 </button>
                 <button
                   className="hover:text-[#fc2121]"
@@ -140,7 +161,7 @@ function Task({ task, index, fetchTasks, t, sortOrder }: listProps) {
                     deleteTask(task.id);
                   }}
                 >
-                  <MdDelete className="w-8 h-8 ml-6" />
+                  <MdDelete className="w-8 h-8 ml-6 w-max-350:ml-4 w-max-350:w-6 w-max-350:h-6" />
                 </button>
               </div>
             </div>

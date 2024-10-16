@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Task from "./Task";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import FilterSort from "./FilterSort";
 
 interface ITask {
   id: number;
@@ -16,6 +17,8 @@ interface listProps {
   t: (key: string) => string;
   filter: string;
   sortOrder: string;
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
+  setSortOrder: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function List({
@@ -25,6 +28,8 @@ function List({
   t,
   filter,
   sortOrder,
+  setFilter,
+  setSortOrder,
 }: listProps) {
   useEffect(() => {
     fetchTasks();
@@ -54,14 +59,21 @@ function List({
 
   return (
     <div>
-      <div className="flex items-center">
+      <div className="flex items-center mt-8">
         <div className="w-[15px] h-1 bg-cblue-100"></div>
         <h2 className="ml-2 font-poppins-semibold">{t("tasks-title")}</h2>
         <span className="font-poppins-semibold text-cblue-100 ml-2">
           {tasks.length}
         </span>
       </div>
-      <div className="list mt-4 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-cblue-100 scrollbar-track-transparent">
+      <FilterSort
+        setFilter={setFilter}
+        setSortOrder={setSortOrder}
+        filter={filter}
+        sortOrder={sortOrder}
+        t={t}
+      />
+      <div className="list flex-grow max-h-[300px] w-max-600:max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-cblue-100 scrollbar-track-transparent">
         <DragDropContext onDragEnd={dragEnd}>
           <Droppable droppableId="tasks" type="list" direction="vertical">
             {(provided) => (

@@ -31,9 +31,9 @@ function FilterSort({
   ];
 
   return (
-    <section className="filter-sort my-6 grid grid-cols-2 gap-2">
+    <section className="filter-sort mt-4 mb-8 grid grid-cols-2 gap-2">
       <div
-        className="border border-cblue-100 rounded-md flex justify-between items-center relative cursor-pointer px-2"
+        className="border border-[#3BADCC] rounded-md flex justify-between items-center relative cursor-pointer w-max-350:text-xs px-2"
         ref={dropdownRef}
       >
         <div
@@ -67,7 +67,7 @@ function FilterSort({
         )}
       </div>
       <div
-        className="border border-cblue-100 rounded-md flex justify-between items-center px-2 relative cursor-pointer"
+        className="border border-[#3BADCC] rounded-md flex justify-between w-max-350:text-xs items-center px-2 relative cursor-pointer"
         ref={dropdownRef}
       >
         <div

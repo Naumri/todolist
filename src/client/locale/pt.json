@@ -6,14 +6,14 @@
     "btn-form": "CRIAR TAREFA",
     "tasks-title": "TAREFAS",
     "no-tasks": "Nenhuma tarefa foi criada ainda.",
-    "edit-task": "EDITAR TAREFA",
+    "edit-task": "EDITAR",
     "design": "Design feito por",
     "developed": "Desenvolvido por",
     "question": "Quer ver mais projetos como esse?",
     "portfolio": "Acesse meu portfólio",
-    "alltasks": "TODAS TAREFAS",
-    "done": "FEITAS",
-    "todo": "A FAZER",
-    "notordered": "NÃO ORDENADO"
+    "alltasks": "Todas tarefas",
+    "done": "Feitas",
+    "todo": "A fazer",
+    "notordered": "Não ordenado"
   }
 }

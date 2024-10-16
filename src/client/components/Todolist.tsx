@@ -26,15 +26,8 @@ function Todolist({ t }: listProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-mblue-200 w-[600px] py-16 px-8 rounded-xl max-h-[755px] z-10 relative">
+    <div className="bg-transparent flex flex-col w-[600px] h-full pt-16 w-max-350:pt-8 px-6 w-max-600:px-4 w-max-350:px-2 rounded-xl z-10 relative">
       <Form fetchTasks={fetchTasks} t={t} />
-      <FilterSort
-        setFilter={setFilter}
-        setSortOrder={setSortOrder}
-        filter={filter}
-        sortOrder={sortOrder}
-        t={t}
-      />
       <List
         tasks={tasks}
         setTasks={setTasks}
@@ -42,6 +35,8 @@ function Todolist({ t }: listProps) {
         t={t}
         filter={filter}
         sortOrder={sortOrder}
+        setFilter={setFilter}
+        setSortOrder={setSortOrder}
       />
     </div>
   );
